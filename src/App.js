@@ -1,9 +1,9 @@
 import './App.css';
+import Background from './components/background';
 
 function App() {
   return (
-    <main>
-    </main>
+    <Background></Background>
   );
 }
 
