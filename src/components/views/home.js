@@ -2,6 +2,7 @@ import React from "react";
 import Background from "../layout/background";
 import Floor from "../layout/floor";
 import Header from "../layout/header";
+import Body from "../layout/body";
 
 // Initial page 
 const Home = () => {
@@ -9,9 +10,7 @@ const Home = () => {
         <div>
             <Header/>
             <Background/>
-            <div id="game-items">
-                {/* <!-- Bird img from https://opengameart.org/content/free-game-asset-grumpy-flappy-bird-sprite-sheets --> */}
-            </div>
+            <Body/>
             <div id="winning-msg">
                 <p id="msg">Welcome!</p>
                 <p id="msg-2">Fly: Press + HOLD down "SPACEBAR"</p>
