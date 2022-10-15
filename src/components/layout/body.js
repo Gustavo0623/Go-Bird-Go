@@ -2,9 +2,7 @@ import React from "react"
 
 const Body = () => {
     return (
-        <div id="game-items">
-            {/* <!-- Bird img from https://opengameart.org/content/free-game-asset-grumpy-flappy-bird-sprite-sheets --> */}
-        </div>
+        <div id="game-items"></div>
     )
 }
 

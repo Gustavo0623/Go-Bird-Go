@@ -1,20 +1,39 @@
-const newBird = (url) => {
-    let bird = document.createElement('img')
-    bird.src = url
-    bird.style.position = 'absolute'
-    if(parseFloat(screen.width) <= 785){
-        bird.style.height = getVHInPx(0.053) + 'px'
-    } else {
-        bird.style.height = getVHInPx(0.065) + 'px'
+const Bird = () => {
+    let birdLeft;
+    let birdBottom;
+    let birdHeight;
+    let birdWidth;
+
+    // convert viewheight and viewwidth to pixels
+    function getVWInPx(num){
+        return document.documentElement.clientWidth * num
     }
-    if(parseFloat(screen.width) <= 785){
-        bird.style.width = getVWInPx(0.105) + 'px'
-    } else {
-        bird.style.width = getVWInPx(0.045) + 'px'
+    function getVHInPx(num){
+        return document.documentElement.clientHeight * num
     }
 
-    document.getElementById('game-items').append(bird)
-    return bird
+    // bird initial position
+    const birdPosition = () => {
+        birdLeft = getVWInPx(.35)
+        birdBottom = getVHInPx(.30)
+        birdHeight = getVHInPx(0.065)
+        birdWidth = getVWInPx(0.045)
+    }
+
+    birdPosition()
+
+
+    const birdStyle = {
+        position: 'absolute',
+        height: `${birdHeight}px`,
+        width: `${birdWidth}px`,
+        left: `${birdLeft}px`,
+        bottom: `${birdBottom}px`
+    }
+
+    return (
+        <img style={birdStyle} id="bird" alt="bird" src="./images/bird1.png"/>
+    )
 }
 
-export default newBird
+export default Bird
