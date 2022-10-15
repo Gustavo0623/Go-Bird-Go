@@ -8,15 +8,17 @@ import Leaderboard from './components/views/leaderboard';
 import Login from './components/views/login';
 import SignUp from './components/views/signup';
 
+
 function App() {
+
   return (
     <Routes>
-      <Route path='/' element={<Home/>}/>
-      <Route path='/go' element={<Game/>}/>
-      <Route path='/game_over' element={<GameOver/>}/>
-      <Route path='/high_scores' element={<Leaderboard/>}/>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/sign_up' element={<SignUp/>}/>
+      <Route exact path='/' element={<Home/>}/>
+      <Route exact path='/go' element={<Game/>}/>
+      <Route exact path='/game_over' element={<GameOver/>}/>
+      <Route exact path='/high_scores' element={<Leaderboard/>}/>
+      <Route exact path='/login' element={<Login/>}/>
+      <Route exact path='/sign_up' element={<SignUp/>}/>
     </Routes>
   );
 }
