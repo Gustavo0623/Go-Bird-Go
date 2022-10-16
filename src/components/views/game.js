@@ -11,7 +11,9 @@ const Game = () => {
     const navigate = useNavigate()
     let direction = null
     let projDirection = null 
-    let numProj = 5
+    //const  numProj = 5
+
+
 
 
     // convert viewwidth and viewheight to pixels
@@ -61,24 +63,27 @@ const Game = () => {
         
     }
 
+
     function moveProj (proj) {
         let x = parseFloat(proj.style.left)
         projDirection = 'east'
 
         if(projDirection === 'east') {
-            if( x<=0 ){
-                x = getVWInPx(1)
-                numProj--
-                console.log(numProj)
-            } else {
                x-=5 
-            }
         }
 
         proj.style.left = `${x}px`
     }
     
+    let replaceInt = setInterval(()=> {
+        document.getElementById('projectile').style.left = `${getVWInPx(1)}px`
+    }, 3000)
     
+    setTimeout(() => {
+        clearInterval(replaceInt)
+        clearInterval(gameInt)
+        navigate('/game_over')
+    }, 30000);// value to be edited
 
     let gameInt;
     gameInt = setInterval(() => {
@@ -86,10 +91,7 @@ const Game = () => {
         moveProj(document.getElementById('projectile'))
     }, 20)
 
-    setTimeout(() => {
-        clearInterval(gameInt)
-        navigate('/game_over')
-    }, 500000);// value to be edited
+    
 
     return (
         <div>
