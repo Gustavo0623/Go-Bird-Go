@@ -1,10 +1,13 @@
 import React from "react"
+import { useNavigate } from "react-router-dom"
+
 import Header from "../layout/header"
 import Background from "../layout/background"
 import Floor from "../layout/floor"
 import Bird from "../layout/bird"
 
 const Game = () => {
+    const navigate = useNavigate()
     let direction = null
 
     // convert viewheight to pixels
@@ -19,7 +22,8 @@ const Game = () => {
             if (y >= getVHInPx(.612)){
                 direction = null
             } else {
-                y+=1.2
+                y+=5
+                document.getElementById('bird').src= './images/bird2.png'
             }
         }
         if(direction === 'south'){
@@ -27,7 +31,8 @@ const Game = () => {
             if (y <= getVHInPx(0)){
                 direction = null
             } else {
-                y-=1.1
+                y-=5
+                document.getElementById('bird').src= './images/bird1.png'
             }
         }
         
@@ -49,13 +54,19 @@ const Game = () => {
     
     
 
-    setInterval(() => {
+    let birdInt;
+    birdInt = setInterval(() => {
         move(document.getElementById('bird'))
-    }, 10)
+    }, 20)
+
+    setTimeout(() => {
+        clearInterval(birdInt)
+        navigate('/game_over')
+    }, 5000);
 
     return (
         <div>
-            <Header/>
+           <Header/>
             <Background/>
             <div id="game-items">
                 {/* <!-- Bird img from https://opengameart.org/content/free-game-asset-grumpy-flappy-bird-sprite-sheets --> */}
