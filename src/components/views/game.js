@@ -5,18 +5,27 @@ import Header from "../layout/header"
 import Background from "../layout/background"
 import Floor from "../layout/floor"
 import Bird from "../layout/bird"
+import Projectile from "../layout/projectiles"
 
 const Game = () => {
     const navigate = useNavigate()
     let direction = null
+    let projDirection = null 
+    let numProj = 5
 
-    // convert viewheight to pixels
+
+    // convert viewwidth and viewheight to pixels
+    function getVWInPx(num){
+        return document.documentElement.clientWidth * num
+    }
+
     function getVHInPx(num){
         return document.documentElement.clientHeight * num
     }
 
-    function move (element,) {
+    function move (element) {
         let y = parseFloat(element.style.bottom)
+        
         if(direction === 'north'){
             // fly limit
             if (y >= getVHInPx(.612)){
@@ -39,7 +48,7 @@ const Game = () => {
         element.style.bottom = `${y}px`
 
         document.addEventListener('keydown', function(e){
-            if(e.repeat) return;;
+            if(e.repeat) return;
         
             if(e.key === ' '){
                 direction = 'north'
@@ -51,18 +60,36 @@ const Game = () => {
         })
         
     }
+
+    function moveProj (proj) {
+        let x = parseFloat(proj.style.left)
+        projDirection = 'east'
+
+        if(projDirection === 'east') {
+            if( x<=0 ){
+                x = getVWInPx(1)
+                numProj--
+                console.log(numProj)
+            } else {
+               x-=5 
+            }
+        }
+
+        proj.style.left = `${x}px`
+    }
     
     
 
-    let birdInt;
-    birdInt = setInterval(() => {
+    let gameInt;
+    gameInt = setInterval(() => {
         move(document.getElementById('bird'))
+        moveProj(document.getElementById('projectile'))
     }, 20)
 
     setTimeout(() => {
-        clearInterval(birdInt)
+        clearInterval(gameInt)
         navigate('/game_over')
-    }, 5000);// value to be edited
+    }, 500000);// value to be edited
 
     return (
         <div>
@@ -71,6 +98,7 @@ const Game = () => {
             <div id="game-items">
                 {/* <!-- Bird img from https://opengameart.org/content/free-game-asset-grumpy-flappy-bird-sprite-sheets --> */}
                 <Bird/>
+                <Projectile/>
             </div>
             <Floor/>
         </div>
