@@ -62,7 +62,7 @@ const Game = () => {
     setTimeout(() => {
         clearInterval(birdInt)
         navigate('/game_over')
-    }, 5000);
+    }, 5000);// value to be edited
 
     return (
         <div>
