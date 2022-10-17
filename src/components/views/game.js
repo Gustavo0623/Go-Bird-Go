@@ -16,9 +16,11 @@ const Game = () => {
     let direction = null
     let projDirection = null 
     let projY;
-    let random;
-    let yPosition = [random, high, low, mid, random, random, random, random, random];
     let coinY;
+    let random;
+    //arrays to be replaced with data in database
+    let yPosition = [random, high, low, mid, random, random, random, random, random];
+    
     let coinYPosition = [random, high, low, mid, random, random, random, random, random]
 
     function getRandomNumber(min, max) {
@@ -68,11 +70,6 @@ const Game = () => {
         delay(i)
         coinDelay(i)
     }
-    
-    //const  numProj = 5
-
-
-
 
     // convert viewwidth and viewheight to pixels
     function getVWInPx(num){
@@ -121,7 +118,6 @@ const Game = () => {
         
     }
 
-
     function moveProj (proj) {
         let x = parseFloat(proj.style.left)
         projDirection = 'east'
@@ -132,16 +128,12 @@ const Game = () => {
 
         proj.style.left = `${x}px`
     }
-    
-    /*let replaceInt = setInterval(()=> {
-        document.getElementById('projectile').style.left = `${getVWInPx(1)}px`
-        document.getElementById('projectile').style.bottom = `${projY}px`
-    }, 3000)*/
-    
 
-    
+    /* const collisionCheck = () => {
+        let
+    }*/
+
     setTimeout(() => {
-        //clearInterval(replaceInt)
         clearInterval(gameInt)
         navigate('/game_over')
     }, 30000);// value to be edited
