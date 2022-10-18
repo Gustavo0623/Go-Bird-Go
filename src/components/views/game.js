@@ -18,6 +18,9 @@ const Game = () => {
     let projY;
     let coinY;
     let random;
+    let executed = false;
+    //let score = 0
+    let lives = 5
     //arrays to be replaced with data in database
     let yPosition = [random, high, low, mid, random, random, random, random, random];
     
@@ -46,10 +49,12 @@ const Game = () => {
         setTimeout(()=> {
             if (yPosition[i] === random) {
                 randomProjPosition()
+                executed = false
             } else {
                 projY = yPosition[i]
                 document.getElementById('projectile').style.left = `${getVWInPx(1)}px`
                 document.getElementById('projectile').style.bottom = `${projY}px`
+                executed = false
             }
         }, i*2000)
     }
@@ -123,15 +128,46 @@ const Game = () => {
         projDirection = 'east'
 
         if(projDirection === 'east') {
-               x-=8 
+               x-=7 
         }
 
         proj.style.left = `${x}px`
     }
 
-    /* const collisionCheck = () => {
-        let
-    }*/
+    const collisionCheck = () => {
+        let birdLeft = parseFloat(document.getElementById('bird').style.left)
+        let birdBottom = parseFloat(document.getElementById('bird').style.bottom)
+        let birdHeight = parseFloat(document.getElementById('bird').style.height)
+        let birdWidth = parseFloat(document.getElementById('bird').style.width)
+        let projLeft = parseFloat(document.getElementById('projectile').style.left)
+        let projBottom = parseFloat(document.getElementById('projectile').style.bottom)
+        let projHeight = parseFloat(document.getElementById('projectile').style.height)
+        let projWidth = parseFloat(document.getElementById('projectile').style.width)
+        /*let coinLeft = parseFloat(document.getElementById('coin').style.left)
+        let coinBottom = parseFloat(document.getElementById('coin').style.bottom)
+        let coinHeight = parseFloat(document.getElementById('coin').style.height)
+        let coinWidth = parseFloat(document.getElementById('coin').style.width)*/
+
+        const execute = () => {
+            lives--
+            executed = true
+            console.log (lives)
+        }
+
+        // Bird collide with projectile
+        if (birdLeft+birdWidth >= projLeft && birdLeft <= projLeft+projWidth) {
+            if (birdBottom+birdHeight >= projBottom && birdBottom <= projBottom+projHeight){
+                if (executed === true) {
+                    return
+                } else {
+                    execute()
+                }
+                
+            }
+        } else {
+            return
+        }
+    }
 
     setTimeout(() => {
         clearInterval(gameInt)
@@ -143,6 +179,7 @@ const Game = () => {
         move(document.getElementById('bird'))
         moveProj(document.getElementById('projectile'))
         moveProj(document.getElementById('coin'))
+        collisionCheck()
     }, 20)
 
     
