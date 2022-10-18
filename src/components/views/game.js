@@ -19,12 +19,32 @@ const Game = () => {
     let coinY;
     let random;
     let executed = false;
-    //let score = 0
+    let collected = false;
+    let score = 0
     let lives = 5
     //arrays to be replaced with data in database
-    let yPosition = [random, high, low, mid, random, random, random, random, random];
+    let yPosition = [random, high, low, mid, random];
     
-    let coinYPosition = [random, high, low, mid, random, random, random, random, random]
+    let coinYPosition = [random, high, low, mid, random, random, random, random, random];
+
+    let gameLength;
+
+    if (yPosition.length >= coinYPosition.length) {
+        gameLength = yPosition.length * 2000 + 2000
+        console.log('running based off projectile numbers ' + gameLength)
+    } else {
+        gameLength = coinYPosition.length * 2000 + 2000
+        console.log('running based off coin numbers' + gameLength)
+    }
+
+    const logScore = () => {
+        // add data to array
+
+        // reset data
+
+        collected = 0
+        lives = 5
+    }
 
     function getRandomNumber(min, max) {
         min = Math.ceil(min);
@@ -61,18 +81,24 @@ const Game = () => {
 
     const coinDelay = (i) => {
         setTimeout(() => {
-            if (coinYPosition[i] === random){
+            if (coinYPosition[i] === random){  
+                document.getElementById('coin').style.opacity = 1
                 randomPosition()
+                collected = false
             } else {
                 coinY = coinYPosition[i]
                 document.getElementById('coin').style.left = `${getVWInPx(1)}px`
                 document.getElementById('coin').style.bottom = `${coinY}px`
+                document.getElementById('coin').style.opacity = 1
+                collected = false
             }
         }, i * 2000 + 1000)
     }
 
     for (let i = 0; i < yPosition.length; i++) {
         delay(i)
+    }
+    for (let i = 0; i<coinYPosition.length; i++) {
         coinDelay(i)
     }
 
@@ -143,15 +169,31 @@ const Game = () => {
         let projBottom = parseFloat(document.getElementById('projectile').style.bottom)
         let projHeight = parseFloat(document.getElementById('projectile').style.height)
         let projWidth = parseFloat(document.getElementById('projectile').style.width)
-        /*let coinLeft = parseFloat(document.getElementById('coin').style.left)
+        let coinLeft = parseFloat(document.getElementById('coin').style.left)
         let coinBottom = parseFloat(document.getElementById('coin').style.bottom)
         let coinHeight = parseFloat(document.getElementById('coin').style.height)
-        let coinWidth = parseFloat(document.getElementById('coin').style.width)*/
+        let coinWidth = parseFloat(document.getElementById('coin').style.width)
 
         const execute = () => {
             lives--
             executed = true
             console.log (lives)
+        }
+
+        const collectCoin = () => {
+
+            if (birdLeft+birdWidth >= coinLeft && birdLeft <= coinLeft+coinWidth) {
+                if (birdBottom+birdHeight >= coinBottom && birdBottom <= coinBottom+coinHeight) {
+                    if (collected === true){
+                        return
+                    } else {
+                        document.getElementById('coin').style.opacity = 0
+                        score++
+                        collected = true
+                        console.log(score)
+                    }
+                }
+            }
         }
 
         // Bird collide with projectile
@@ -165,14 +207,15 @@ const Game = () => {
                 
             }
         } else {
-            return
+            collectCoin()
         }
     }
 
     setTimeout(() => {
         clearInterval(gameInt)
         navigate('/game_over')
-    }, 30000);// value to be edited
+        logScore()
+    }, gameLength);// value to be edited
 
     let gameInt;
     gameInt = setInterval(() => {
