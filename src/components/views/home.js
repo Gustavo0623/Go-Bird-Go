@@ -23,7 +23,7 @@ const Home = () => {
                 <p id="msg-3">RELEASE to glide down!</p>
                 <p id="msg-4">Avoid the incoming tubes!</p>
                 <button id="go" onClick={() => {
-                    navigate('/go')
+                    navigate('/map_select')
                     ClickBtn()
                 }}>
                     Go Bird Go!

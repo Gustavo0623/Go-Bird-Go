@@ -29,6 +29,35 @@ const Game = () => {
 
     let gameLength;
 
+    /*const [gameMap, setGameMap] = useState()
+  
+    useEffect(() => {
+        getGameMap()
+    }, [])
+
+
+    const getGameMap = () => {
+    const removeBrackets = (object) => {
+        object = object.replace("{", "")
+        object = object.replace("}", "")
+        object = object.replace('"', '')
+        object = object.replace('"', '')
+        object = object.replace('"', '')
+        object = object.replace('"', '')
+        object = object.split(':')
+        object = object[1].split(',')
+        return object
+    }
+
+    return fetch('http://localhost:5000/maps/1', {method: 'GET'})
+        .then(response=> {
+            return response.text();
+        })
+        .then(data=> {
+            setGameMap(removeBrackets(data));
+        })
+    }*/
+
     if (yPosition.length >= coinYPosition.length) {
         gameLength = yPosition.length * 2000 + 2000
         console.log('running based off projectile numbers ' + gameLength)
@@ -154,7 +183,7 @@ const Game = () => {
         projDirection = 'east'
 
         if(projDirection === 'east') {
-               x-=7 
+               x-=6 
         }
 
         proj.style.left = `${x}px`
@@ -223,7 +252,7 @@ const Game = () => {
         moveProj(document.getElementById('projectile'))
         moveProj(document.getElementById('coin'))
         collisionCheck()
-    }, 20)
+    }, 10)
 
     
 

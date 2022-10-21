@@ -7,6 +7,7 @@ import Game from './components/views/game';
 import Leaderboard from './components/views/leaderboard';
 import Login from './components/views/login';
 import SignUp from './components/views/signup';
+import DisplayMaps from './components/views/display_map';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   return (
     <Routes>
       <Route exact path='/' element={<Home/>}/>
+      <Route exact path='/map_select' element={<DisplayMaps/>}/>
       <Route exact path='/go' element={<Game/>}/>
       <Route exact path='/game_over' element={<GameOver/>}/>
       <Route exact path='/high_scores' element={<Leaderboard/>}/>
