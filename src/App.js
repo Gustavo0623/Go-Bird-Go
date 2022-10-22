@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import { Route, Routes } from 'react-router-dom'
 import './App.css';
 import Home from './components/views/home';
@@ -9,10 +9,14 @@ import Login from './components/views/login';
 import SignUp from './components/views/signup';
 import DisplayMaps from './components/views/display_map';
 
+export const ProjContext = React.createContext({ projValue: null, setProjValue: () => {} })
 
 function App() {
+  const[ projValue, setProjValue ] = useState(null)
+
 
   return (
+    <ProjContext.Provider value={{projValue, setProjValue}}>
     <Routes>
       <Route exact path='/' element={<Home/>}/>
       <Route exact path='/map_select' element={<DisplayMaps/>}/>
@@ -22,6 +26,7 @@ function App() {
       <Route exact path='/login' element={<Login/>}/>
       <Route exact path='/sign_up' element={<SignUp/>}/>
     </Routes>
+    </ProjContext.Provider>
   );
 }
 

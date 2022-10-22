@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useContext} from "react"
 import { useNavigate } from "react-router-dom"
 
 import Header from "../layout/header"
@@ -7,8 +7,10 @@ import Floor from "../layout/floor"
 import Bird from "../layout/bird"
 import Projectile from "../layout/projectiles"
 import Coin from "../layout/coin"
+import { ProjContext } from "../../App"
 
 const Game = () => {
+    const mapValue = useContext(ProjContext).projValue
     const navigate = useNavigate()
     const high = getVHInPx(.63)
     const mid = getVHInPx(.30)
@@ -23,40 +25,25 @@ const Game = () => {
     let score = 0
     let lives = 5
     //arrays to be replaced with data in database
-    let yPosition = [random, high, low, mid, random];
+    let yPosition = mapValue.Projectiles_placement.split(',');
+    console.log(yPosition)
     
-    let coinYPosition = [random, high, low, mid, random, random, random, random, random];
+    let coinYPosition = mapValue.Coins_placement.split(',');
+    console.log(coinYPosition)
 
     let gameLength;
 
-    /*const [gameMap, setGameMap] = useState()
-  
-    useEffect(() => {
-        getGameMap()
-    }, [])
-
-
-    const getGameMap = () => {
-    const removeBrackets = (object) => {
-        object = object.replace("{", "")
-        object = object.replace("}", "")
-        object = object.replace('"', '')
-        object = object.replace('"', '')
-        object = object.replace('"', '')
-        object = object.replace('"', '')
-        object = object.split(':')
-        object = object[1].split(',')
-        return object
+    const fixValue = (element, i) => {
+        if (element[i] === 'mid'){
+            element[i] = mid
+        } else if (element[i] === 'high'){
+            element[i] = high
+        } else if (element[i] === 'low'){
+            element[i] = low
+        } else if (element[i] === 'random'){
+            element[i] = random
+        }
     }
-
-    return fetch('http://localhost:5000/maps/1', {method: 'GET'})
-        .then(response=> {
-            return response.text();
-        })
-        .then(data=> {
-            setGameMap(removeBrackets(data));
-        })
-    }*/
 
     if (yPosition.length >= coinYPosition.length) {
         gameLength = yPosition.length * 2000 + 2000
@@ -125,9 +112,11 @@ const Game = () => {
     }
 
     for (let i = 0; i < yPosition.length; i++) {
+        fixValue(yPosition, i)
         delay(i)
     }
     for (let i = 0; i<coinYPosition.length; i++) {
+        fixValue(coinYPosition, i)
         coinDelay(i)
     }
 

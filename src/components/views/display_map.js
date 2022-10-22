@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
 import Background from "../layout/background";
 import Floor from "../layout/floor";
 import Body from "../layout/body";
+import { ProjContext } from "../../App";
 
 const DisplayMaps = () => {
+    const projContext = useContext(ProjContext)
     let map;
 
     const navigate = useNavigate()
@@ -32,12 +34,14 @@ const DisplayMaps = () => {
     } 
     if (gameMap) {
         console.log(gameMap[0].id)
+
     }
     
 
     function changeMap (sel) {
         map = sel.options[sel.selectedIndex].value
         map = JSON.parse(map)
+        projContext.setProjValue(gameMap[map])
         let projectiles = gameMap[map].Projectiles_placement.split(',')
         let coins = gameMap[map].Coins_placement.split(',')
         document.getElementById('msg-3').textContent = `Projectiles: ${projectiles.length}`
