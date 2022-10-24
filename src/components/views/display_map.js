@@ -46,6 +46,7 @@ const DisplayMaps = () => {
         let coins = gameMap[map].Coins_placement.split(',')
         document.getElementById('msg-3').textContent = `Projectiles: ${projectiles.length}`
         document.getElementById('msg-4').textContent = `Coins: ${coins.length}`
+        document.getElementById('go').style.display= `inline`
     }
 
 
@@ -61,16 +62,20 @@ const DisplayMaps = () => {
                 </div>
             ): (
                 <div id="winning-msg">
-                    <select id='select' onChange={()=> {changeMap(document.getElementById('select'))}}>
+                    <select style={{backgroundColor: "#FFF8.5"}} className='fs-5 fw-bold w-50 text-center px-2 form-select' id='select' onChange={()=> {
+                        changeMap(document.getElementById('select'))
+                        document.getElementById('disable').disabled = true
+                        }}>
+                        <option value={''} id={'disable'} key={0}>Choose Map</option>
                         { gameMap.map((map, i) => {
-                            return <option value={i} id={(map.id === 1)?(`msg-2`):(`msg-${map.id}`)} key={i}>
+                            return <option value={i} key={i + 1}>
                                 {map.Map_Name}
                             </option>
                         })}
                     </select>
                     <p id='msg-3'></p>
                     <p id='msg-4'></p>
-                    <button id="go" onClick={() => {
+                    <button style={{display: 'none'}} id="go" onClick={() => {
                         navigate('/go')
                     }}>
                         Go Bird Go!
