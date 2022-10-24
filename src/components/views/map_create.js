@@ -4,7 +4,13 @@ import Body from "../layout/body"
 import Background from "../layout/background"
 import Floor from "../layout/floor"
 
-const Login = () => {
+const Create = () => {
+
+    setTimeout(() => {
+        document.getElementById('h-score-sign').style.display= 'none'
+        document.getElementById('c-score-sign').style.display= 'none'
+    })
+
     return (
         <div>
             <Header/>
@@ -17,4 +23,4 @@ const Login = () => {
 }
 
 // Export
-export default Login
+export default Create

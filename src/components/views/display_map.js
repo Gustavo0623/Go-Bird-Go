@@ -4,10 +4,11 @@ import Header from "../layout/header";
 import Background from "../layout/background";
 import Floor from "../layout/floor";
 import Body from "../layout/body";
-import { ProjContext } from "../../App";
+import {ProjContext} from "../../App";
 
 const DisplayMaps = () => {
-    const projContext = useContext(ProjContext)
+
+    const projContext = useContext(ProjContext)[0]
     let map;
 
     const navigate = useNavigate()
@@ -21,6 +22,9 @@ const DisplayMaps = () => {
 
     const getGameMap = () => {
 
+    document.getElementById('h-score-sign').style.display= 'none'
+    document.getElementById('c-score-sign').style.display= 'none'
+
     return fetch('http://localhost:5000/maps', {method: 'GET'})
         .then(response=> {
             return response.text();
@@ -32,10 +36,6 @@ const DisplayMaps = () => {
             console.log(error)
         })
     } 
-    if (gameMap) {
-        console.log(gameMap[0].id)
-
-    }
     
 
     function changeMap (sel) {
@@ -57,11 +57,11 @@ const DisplayMaps = () => {
             <Background/>
             <Body/>
             {(!gameMap) ? (
-                <div id="winning-msg">
+                <div id="winning-msg" className="w-50" style={{margin: 'auto', left: '25vw'}}>
                     <p id='msg'>Loading...</p>
                 </div>
             ): (
-                <div id="winning-msg">
+                <div id="winning-msg" className="w-50" style={{margin: 'auto', left: '25vw'}}>
                     <select style={{backgroundColor: "#FFF8.5"}} className='fs-5 fw-bold w-50 text-center px-2 form-select' id='select' onChange={()=> {
                         changeMap(document.getElementById('select'))
                         document.getElementById('disable').disabled = true

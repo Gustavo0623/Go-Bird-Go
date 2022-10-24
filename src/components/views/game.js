@@ -10,7 +10,8 @@ import Coin from "../layout/coin"
 import { ProjContext } from "../../App"
 
 const Game = () => {
-    const mapValue = useContext(ProjContext).projValue
+    const mapValue = useContext(ProjContext)[0].projValue
+    const gameContext = useContext(ProjContext)[1]
     const navigate = useNavigate()
     const high = getVHInPx(.63)
     const mid = getVHInPx(.30)
@@ -22,16 +23,13 @@ const Game = () => {
     let random;
     let executed = false;
     let collected = false;
-    let score = 0
-    let lives = 5
-    //arrays to be replaced with data in database
-    let yPosition = mapValue.Projectiles_placement.split(',');
-    console.log(yPosition)
-    
-    let coinYPosition = mapValue.Coins_placement.split(',');
-    console.log(coinYPosition)
-
     let gameLength;
+    let score = 0
+    let lives;
+    // arrays to be replaced with data in database 
+    // UPDATE: arrays updated
+    let yPosition = mapValue.Projectiles_placement.split(',');
+    let coinYPosition = mapValue.Coins_placement.split(',');
 
     const fixValue = (element, i) => {
         if (element[i] === 'mid'){
@@ -44,23 +42,26 @@ const Game = () => {
             element[i] = random
         }
     }
+    const calcLives = () => {
+        let calc = gameLength-2000
+        if (calc / 2000 <= 3 ) {
+        return lives = 1
+        }
+    }
 
     if (yPosition.length >= coinYPosition.length) {
         gameLength = yPosition.length * 2000 + 2000
-        console.log('running based off projectile numbers ' + gameLength)
+        calcLives()
     } else {
         gameLength = coinYPosition.length * 2000 + 2000
-        console.log('running based off coin numbers' + gameLength)
+        calcLives()
     }
+
 
     const logScore = () => {
-        // add data to array
-
-        // reset data
-
-        collected = 0
-        lives = 5
+        document.getElementById('c-score').innerHTML = `${score}/${coinYPosition.length}`
     }
+    logScore()
 
     function getRandomNumber(min, max) {
         min = Math.ceil(min);
@@ -83,39 +84,53 @@ const Game = () => {
 
     const delay = (i) => {
         setTimeout(()=> {
-            if (yPosition[i] === random) {
-                randomProjPosition()
-                executed = false
+            if (lives <= 0) {
+                return
             } else {
-                projY = yPosition[i]
-                document.getElementById('projectile').style.left = `${getVWInPx(1)}px`
-                document.getElementById('projectile').style.bottom = `${projY}px`
-                executed = false
+                if (yPosition[i] === random) {
+                    randomProjPosition()
+                    executed = false
+                } else {
+                    projY = yPosition[i]
+                    document.getElementById('projectile').style.left = `${getVWInPx(1)}px`
+                    document.getElementById('projectile').style.bottom = `${projY}px`
+                    executed = false
+                }
             }
         }, i*2000)
     }
 
     const coinDelay = (i) => {
         setTimeout(() => {
-            if (coinYPosition[i] === random){  
-                document.getElementById('coin').style.opacity = 1
-                randomPosition()
-                collected = false
+            if (lives <= 0) {
+                return
             } else {
-                coinY = coinYPosition[i]
-                document.getElementById('coin').style.left = `${getVWInPx(1)}px`
-                document.getElementById('coin').style.bottom = `${coinY}px`
-                document.getElementById('coin').style.opacity = 1
-                collected = false
+                if (coinYPosition[i] === random){  
+                    document.getElementById('coin').style.opacity = 1
+                    randomPosition()
+                    collected = false
+                } else {
+                    coinY = coinYPosition[i]
+                    document.getElementById('coin').style.left = `${getVWInPx(1)}px`
+                    document.getElementById('coin').style.bottom = `${coinY}px`
+                    document.getElementById('coin').style.opacity = 1
+                    collected = false
+                }  
             }
         }, i * 2000 + 1000)
     }
 
     for (let i = 0; i < yPosition.length; i++) {
+        if (lives <=0) {
+            break
+        }
         fixValue(yPosition, i)
         delay(i)
     }
     for (let i = 0; i<coinYPosition.length; i++) {
+        if (lives <=0) {
+            break
+        }
         fixValue(coinYPosition, i)
         coinDelay(i)
     }
@@ -172,7 +187,7 @@ const Game = () => {
         projDirection = 'east'
 
         if(projDirection === 'east') {
-               x-=6 
+               x-=7 
         }
 
         proj.style.left = `${x}px`
@@ -195,7 +210,6 @@ const Game = () => {
         const execute = () => {
             lives--
             executed = true
-            console.log (lives)
         }
 
         const collectCoin = () => {
@@ -207,6 +221,7 @@ const Game = () => {
                     } else {
                         document.getElementById('coin').style.opacity = 0
                         score++
+                        logScore()
                         collected = true
                         console.log(score)
                     }
@@ -229,10 +244,14 @@ const Game = () => {
         }
     }
 
-    setTimeout(() => {
+    let gameTimeout = setTimeout(() => {
         clearInterval(gameInt)
+        gameContext.setGameStatus({
+            Pass: true,
+            coinsCollected: score,
+            totalCoins: coinYPosition.length
+        })
         navigate('/game_over')
-        logScore()
     }, gameLength);// value to be edited
 
     let gameInt;
@@ -241,7 +260,18 @@ const Game = () => {
         moveProj(document.getElementById('projectile'))
         moveProj(document.getElementById('coin'))
         collisionCheck()
+        if (lives <=0) {
+            clearTimeout(gameTimeout)
+            clearInterval(gameInt)
+            gameContext.setGameStatus({
+                Pass: false,
+                coinsCollected: score,
+                totalCoins: coinYPosition.length
+            })
+            navigate('/game_over')
+        }
     }, 10)
+
 
     
 
