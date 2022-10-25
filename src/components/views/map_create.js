@@ -3,6 +3,7 @@ import Header from "../layout/header"
 import Body from "../layout/body"
 import Background from "../layout/background"
 import Floor from "../layout/floor"
+import Form from "../layout/form"
 
 const Create = () => {
 
@@ -17,7 +18,7 @@ const Create = () => {
             <Header/>
             <Background/>
             <Body/>
-            <div id='winning-msg'></div>
+            <Form/>
             <Floor/>
         </div>
     )
