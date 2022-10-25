@@ -6,6 +6,7 @@ import Floor from "../layout/floor"
 
 const Edit = () => {
 
+    // To clear display of these elements while on this page
     setTimeout(() => {
         document.getElementById('h-score-sign').style.display= 'none'
         document.getElementById('c-score-sign').style.display= 'none'

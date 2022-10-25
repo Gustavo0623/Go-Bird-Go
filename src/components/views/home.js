@@ -11,6 +11,8 @@ import ClickBtn from "../mechanics/button_click";
 // Initial page 
 const Home = () => {
     const navigate = useNavigate()
+
+    // To clear display of these elements while on this page
     setTimeout(() => {
         document.getElementById('h-score-sign').style.display= 'none'
         document.getElementById('c-score-sign').style.display= 'none'

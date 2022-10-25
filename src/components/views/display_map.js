@@ -19,15 +19,16 @@ const DisplayMaps = () => {
         getGameMap()
     }, [])
 
-
+    // To fetch data Fron Database
     const getGameMap = () => {
 
-    document.getElementById('h-score-sign').style.display= 'none'
-    document.getElementById('c-score-sign').style.display= 'none'
+        // To clear display of these elements while on this page
+        document.getElementById('h-score-sign').style.display= 'none'
+        document.getElementById('c-score-sign').style.display= 'none'
 
-    return fetch('http://localhost:5000/maps', {method: 'GET'})
+        return fetch('http://localhost:5000/maps', {method: 'GET'})
         .then(response=> {
-            return response.text();
+                return response.text();
         })
         .then(data=> {
             setGameMap(JSON.parse(data))
@@ -37,7 +38,8 @@ const DisplayMaps = () => {
         })
     } 
     
-
+    // To set Context of map that is selected to Game page to use to 
+    // initialize game based on the map values
     function changeMap (sel) {
         map = sel.options[sel.selectedIndex].value
         map = JSON.parse(map)

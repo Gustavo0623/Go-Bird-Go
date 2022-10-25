@@ -13,24 +13,32 @@ const Game = () => {
     const mapValue = useContext(ProjContext)[0].projValue
     const gameContext = useContext(ProjContext)[1]
     const navigate = useNavigate()
+    // To position coins/projectiles based on screen width/height
     const high = getVHInPx(.63)
     const mid = getVHInPx(.30)
     const low = getVHInPx(0)
+    // Direction variables for game objects
     let direction = null
     let projDirection = null 
+    // Will be given values in their respactive functions
     let projY;
     let coinY;
     let random;
+    // Controlling functions that are used in interval to prevent errors/ loops
     let executed = false;
     let collected = false;
+    // Game variables
     let gameLength;
     let score = 0
     let lives;
-    // arrays to be replaced with data in database 
+    // Arrays to be replaced with data in database 
     // UPDATE: arrays updated
+    // Values in database are a string with values separated by commas
+    // Commas used so that it can be converted to an array using split() function
     let yPosition = mapValue.Projectiles_placement.split(',');
     let coinYPosition = mapValue.Coins_placement.split(',');
 
+    // To fix mid high low declaration issue
     const fixValue = (element, i) => {
         if (element[i] === 'mid'){
             element[i] = mid
@@ -42,13 +50,24 @@ const Game = () => {
             element[i] = random
         }
     }
+
+
+    // To Calculate Lives based on gamelength 
+    // 1-3 projectiles = 1 life
+    // 3-29 projectiles = 3 lives
+    // 30+ projectiles = 5 Lives
     const calcLives = () => {
         let calc = gameLength-2000
         if (calc / 2000 <= 3 ) {
         return lives = 1
+        } else if (calc / 2000 <= 29){
+            return lives = 3
+        } else {
+            return lives = 5
         }
     }
 
+    // To calculate gamelength based on length of either projectiles or coins array (longest).  
     if (yPosition.length >= coinYPosition.length) {
         gameLength = yPosition.length * 2000 + 2000
         calcLives()
@@ -57,12 +76,16 @@ const Game = () => {
         calcLives()
     }
 
-
+    // To display lives left and coins goal upon initializing
     const logScore = () => {
         document.getElementById('c-score').innerHTML = `${score}/${coinYPosition.length}`
+        document.getElementById('h-score').innerHTML = `${lives} Remaining`
     }
-    logScore()
+    setTimeout(() => {
+        logScore()
+    })
 
+    // For applying a random number function
     function getRandomNumber(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -82,6 +105,9 @@ const Game = () => {
         document.getElementById('projectile').style.bottom = `${getVHInPx(randomPos/100)}px`
     }
 
+    // Delays will be used in for loops later 
+    // Used to loop through positioning arrays (whichever is longer)
+    // To calculate game length
     const delay = (i) => {
         setTimeout(()=> {
             if (lives <= 0) {
@@ -135,7 +161,7 @@ const Game = () => {
         coinDelay(i)
     }
 
-    // convert viewwidth and viewheight to pixels
+    // Convert viewwidth and viewheight to pixels
     function getVWInPx(num){
         return document.documentElement.clientWidth * num
     }
@@ -143,12 +169,15 @@ const Game = () => {
     function getVHInPx(num){
         return document.documentElement.clientHeight * num
     }
+    
+
+    // Move bird function (up and down)
 
     function move (element) {
         let y = parseFloat(element.style.bottom)
         
         if(direction === 'north'){
-            // fly limit
+            // Fly limit
             if (y >= getVHInPx(.612)){
                 direction = null
             } else {
@@ -157,7 +186,7 @@ const Game = () => {
             }
         }
         if(direction === 'south'){
-            // floor collision  stop
+            // Floor collision  stop
             if (y <= getVHInPx(0)){
                 direction = null
             } else {
@@ -182,6 +211,9 @@ const Game = () => {
         
     }
 
+
+    // Move projectile function (east = left)
+
     function moveProj (proj) {
         let x = parseFloat(proj.style.left)
         projDirection = 'east'
@@ -192,6 +224,9 @@ const Game = () => {
 
         proj.style.left = `${x}px`
     }
+
+
+    // Collision detection
 
     const collisionCheck = () => {
         let birdLeft = parseFloat(document.getElementById('bird').style.left)
@@ -207,10 +242,13 @@ const Game = () => {
         let coinHeight = parseFloat(document.getElementById('coin').style.height)
         let coinWidth = parseFloat(document.getElementById('coin').style.width)
 
+        // For decrementing lives when hit by projectiles
         const execute = () => {
             lives--
             executed = true
         }
+
+        // Collect coins when collidig with them and make them dissapear after
 
         const collectCoin = () => {
 
@@ -244,6 +282,9 @@ const Game = () => {
         }
     }
 
+
+    // Function to stop everything a couple seconds after final projectile/coin has passed
+
     let gameTimeout = setTimeout(() => {
         clearInterval(gameInt)
         gameContext.setGameStatus({
@@ -254,6 +295,7 @@ const Game = () => {
         navigate('/game_over')
     }, gameLength);// value to be edited
 
+    // Initializing interval upon load cleared with gameTImeout or when Lives = 0
     let gameInt;
     gameInt = setInterval(() => {
         move(document.getElementById('bird'))
