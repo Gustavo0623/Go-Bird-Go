@@ -1,5 +1,14 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useContext } from "react"
+import { useNavigate } from "react-router-dom"
+import { PushContext } from "../../App"
+
+
 const CoinForm = () => {
+    const navigate = useNavigate()
+    const test = useContext(PushContext)
+    const newCoinContext = useContext(PushContext)[2]
+    console.log(test)
+    console.log(newCoinContext)
     let rangeArr = []
     let range;
     let position;
@@ -22,8 +31,8 @@ const CoinForm = () => {
     }, [])
 
     const displayControl = () => {
-        rangeDisplay.textContent = `Projectile ${parseFloat(range.value)} is placed ${rangeArr[parseFloat(range.value) - 1]}`
-        editRangeLabel.textContent = `Edit Projectile: ${parseFloat(range.value)}`
+        rangeDisplay.textContent = `Coin ${parseFloat(range.value)} is placed ${rangeArr[parseFloat(range.value) - 1]}`
+        editRangeLabel.textContent = `Edit Coin: ${parseFloat(range.value)}`
     }
 
     const updateRangeArr = () => {
@@ -34,8 +43,8 @@ const CoinForm = () => {
         displayControl()
         radioEnable()
         cNextBtn.disabled = false
-        coinLabel.textContent = `Number of Projectiles: ${rangeArr.length}`
-        rangeDisplay.textContent = `Projectile ${parseFloat(rangeArr.length)} is placed ${position}`
+        coinLabel.textContent = `Number of Coins: ${rangeArr.length}`
+        rangeDisplay.textContent = `Coin ${parseFloat(rangeArr.length)} is placed ${position}`
     }
 
     const radioDisable = () => {
@@ -52,7 +61,7 @@ const CoinForm = () => {
     }
 
     const editCheck = () => {
-        if (`${selPosition}` === 'Projectile Position') {
+        if (`${selPosition}` === 'Coin Position') {
             editBtn.disabled = true
         } else {
             editBtn.disabled = false
@@ -68,7 +77,7 @@ const CoinForm = () => {
                 rangeArr.splice(range.value - 1, 1)
                 range.max = rangeArr.length
                 displayControl()
-                coinLabel.textContent = `Number of Projectiles: ${rangeArr.length}`
+                coinLabel.textContent = `Number of Coins: ${rangeArr.length}`
                 console.log('good')
             } else {
                 range.min = 0
@@ -81,7 +90,7 @@ const CoinForm = () => {
                 editBtn.disabled = true
                 cNextBtn.disabled = true
                 displayControl()
-                coinLabel.textContent = `Number of Projectiles: ${rangeArr.length}`
+                coinLabel.textContent = `Number of Coins: ${rangeArr.length}`
             }
             console.log(rangeArr)
             
@@ -94,9 +103,11 @@ const CoinForm = () => {
         }
     }
     const next = () => {
-        let coinArray = rangeArr.toString()
-        coinArray = coinArray.toLowerCase()
-        console.log(coinArray)
+        let coinString = rangeArr.toString()
+        coinString = coinString.toLowerCase()
+        newCoinContext.setCoinValue(`${coinString}`)
+        navigate('/map_create/3')
+        console.log(test)
     }
 
     setTimeout(() => {
@@ -120,13 +131,13 @@ const CoinForm = () => {
 
     
     return (
-        <div className="input-group w-50" style={{flexDirection: 'row', left: '25%'}}>
+        <div className="input-group w-50" style={{flexDirection: 'row', left: '25%'}} id="winning-msg">
             <div className="w-75" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
                 <select className="form-select text-center px-2 w-50" id="c-rangeSel" aria-label="Default select example" onChange={() => {
                     document.getElementById('disable').disabled = true
                     document.getElementById('c-cntrlBtn').disabled = false
                 }}>
-                    <option id="disable" value="0">Projectile Position</option>
+                    <option id="disable" value="0">Coin Position</option>
                     <option value="1">High</option>
                     <option value="2">Middle</option>
                     <option value="3">Low</option>
@@ -144,7 +155,7 @@ const CoinForm = () => {
             </div>
             <div className="w-100" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <div className="w-50" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <label htmlFor="customRange2" className="form-label" id="editCoin">Edit Projectile:</label>
+                    <label htmlFor="customRange2" className="form-label" id="editCoin">Edit Coin:</label>
                     <input type="range" className="form-range" min="0" max={rangeArr.length} id="c-Range" onChange={() => {
                        displayControl()
                     }}></input>
@@ -182,7 +193,7 @@ const CoinForm = () => {
                         document.getElementById('disable-2').disabled = true
                         editBtn.disabled = false
                     }}>
-                        <option id="disable-2" value="0">Projectile Position</option>
+                        <option id="disable-2" value="0">Coin Position</option>
                         <option value="1">High</option>
                         <option value="2">Middle</option>
                         <option value="3">Low</option>

@@ -1,8 +1,12 @@
 import React, { useEffect, useContext } from "react"
+import { useNavigate } from "react-router-dom";
 import { PushContext } from "../../App";
+
+
 const Form = () => {
     const newProjContext = useContext(PushContext)[1]
     console.log(newProjContext)
+    const navigate = useNavigate()
     let rangeArr = []
     let range;
     let position;
@@ -101,6 +105,7 @@ const Form = () => {
         let projString = rangeArr.toString()
         projString = projString.toLowerCase()
         newProjContext.setNewProjValue(`${projString}`)
+        navigate('/map_create/2')
     }
 
     setTimeout(() => {

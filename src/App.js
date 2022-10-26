@@ -8,6 +8,8 @@ import Leaderboard from './components/views/leaderboard';
 import Create from './components/views/map_create';
 import Edit from './components/views/map_edit';
 import DisplayMaps from './components/views/display_map';
+import Form2 from './components/views/form_2';
+import Form3 from './components/views/form_3';
 
 // Context for variables that are used between components
 export const ProjContext = React.createContext({ projValue: null, setProjValue: () => {} })
@@ -32,6 +34,8 @@ function App() {
           <Route exact path='/game_over' element={<GameOver/>}/>
           <Route exact path='/high_scores' element={<Leaderboard/>}/>
           <Route exact path='/map_create' element={<Create/>}/>
+          <Route exact path='/map_create/2' element={<Form2/>}/>
+          <Route exact path='/map_create/3' element={<Form3/>}/>
           <Route exact path='/map_edit' element={<Edit/>}/>
         </Routes>
       </PushContext.Provider>
