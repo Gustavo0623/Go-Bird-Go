@@ -1,8 +1,5 @@
-import React, { useEffect, useContext } from "react"
-import { PushContext } from "../../App";
-const Form = () => {
-    const newProjContext = useContext(PushContext)[1]
-    console.log(newProjContext)
+import React, { useEffect } from "react"
+const CoinForm = () => {
     let rangeArr = []
     let range;
     let position;
@@ -12,16 +9,16 @@ const Form = () => {
     let addButton;
     let editBtn;
     let rangeDisplay;
-    let projLabel;
+    let coinLabel;
     let editRangeLabel;
     let allRadioBtns;
-    let nextBtn;
+    let cNextBtn;
 
     useEffect(() => {
-        document.getElementById('cntrlBtn').disabled = true
-        document.getElementById('edit-btn').disabled = true
-        document.getElementById('rangeSelEdit').disabled = true
-        document.getElementById('nextBtn').disabled = true
+        document.getElementById('c-cntrlBtn').disabled = true
+        document.getElementById('c-edit-btn').disabled = true
+        document.getElementById('c-rangeSelEdit').disabled = true
+        document.getElementById('c-nextBtn').disabled = true
     }, [])
 
     const displayControl = () => {
@@ -36,8 +33,8 @@ const Form = () => {
         range.max = rangeArr.length
         displayControl()
         radioEnable()
-        nextBtn.disabled = false
-        projLabel.textContent = `Number of Projectiles: ${rangeArr.length}`
+        cNextBtn.disabled = false
+        coinLabel.textContent = `Number of Projectiles: ${rangeArr.length}`
         rangeDisplay.textContent = `Projectile ${parseFloat(rangeArr.length)} is placed ${position}`
     }
 
@@ -71,7 +68,7 @@ const Form = () => {
                 rangeArr.splice(range.value - 1, 1)
                 range.max = rangeArr.length
                 displayControl()
-                projLabel.textContent = `Number of Projectiles: ${rangeArr.length}`
+                coinLabel.textContent = `Number of Projectiles: ${rangeArr.length}`
                 console.log('good')
             } else {
                 range.min = 0
@@ -82,9 +79,9 @@ const Form = () => {
                 radioDisable()
                 addButton.disabled = true
                 editBtn.disabled = true
-                nextBtn.disabled = true
+                cNextBtn.disabled = true
                 displayControl()
-                projLabel.textContent = `Number of Projectiles: ${rangeArr.length}`
+                coinLabel.textContent = `Number of Projectiles: ${rangeArr.length}`
             }
             console.log(rangeArr)
             
@@ -97,25 +94,24 @@ const Form = () => {
         }
     }
     const next = () => {
-        console.log(rangeArr)
-        let projString = rangeArr.toString()
-        projString = projString.toLowerCase()
-        newProjContext.setNewProjValue(`${projString}`)
+        let coinArray = rangeArr.toString()
+        coinArray = coinArray.toLowerCase()
+        console.log(coinArray)
     }
 
     setTimeout(() => {
-        nextBtn = document.getElementById('nextBtn')
-        addButton = document.getElementById('cntrlBtn')
-        editBtn = document.getElementById('edit-btn')
+        cNextBtn = document.getElementById('c-nextBtn')
+        addButton = document.getElementById('c-cntrlBtn')
+        editBtn = document.getElementById('c-edit-btn')
         addButton.addEventListener('click', updateRangeArr)
-        sel = document.getElementById('rangeSel')
-        selEdit = document.getElementById('rangeSelEdit')
+        sel = document.getElementById('c-rangeSel')
+        selEdit = document.getElementById('c-rangeSelEdit')
         selPosition = selEdit.options[selEdit.selectedIndex].textContent
         selEdit.style.opacity = '.3'
-        range = document.getElementById('Range')
-        rangeDisplay = document.getElementById('proj-text')
-        projLabel = document.getElementById('projLabel')
-        editRangeLabel = document.getElementById('editProj')
+        range = document.getElementById('c-Range')
+        rangeDisplay = document.getElementById('coin-text')
+        coinLabel = document.getElementById('coinLabel')
+        editRangeLabel = document.getElementById('editCoin')
         allRadioBtns = document.querySelectorAll('input[name="flexRadioDefault"]')
         radioDisable()
     })
@@ -123,13 +119,12 @@ const Form = () => {
 
 
     
-
     return (
-        <div className="input-group w-50" style={{flexDirection: 'row', left: '25%'}} id="winning-msg">
+        <div className="input-group w-50" style={{flexDirection: 'row', left: '25%'}}>
             <div className="w-75" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
-                <select className="form-select text-center px-2 w-50" id="rangeSel" aria-label="Default select example" onChange={() => {
+                <select className="form-select text-center px-2 w-50" id="c-rangeSel" aria-label="Default select example" onChange={() => {
                     document.getElementById('disable').disabled = true
-                    document.getElementById('cntrlBtn').disabled = false
+                    document.getElementById('c-cntrlBtn').disabled = false
                 }}>
                     <option id="disable" value="0">Projectile Position</option>
                     <option value="1">High</option>
@@ -137,20 +132,20 @@ const Form = () => {
                     <option value="3">Low</option>
                     <option value="4">Random</option>
                 </select>
-                <button className="btn btn-outline-secondary w-25 control" id="cntrlBtn" type="button"  aria-expanded="false">
+                <button className="btn btn-outline-secondary w-25 control" id="c-cntrlBtn" type="button"  aria-expanded="false">
                     Add
                 </button>
             </div>
             <div className="w-75" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <p className="fw-bold" id="projLabel"></p>
+                <p className="fw-bold" id="coinLabel"></p>
             </div>
             <div className="w-75" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <p id="proj-text"></p>
+                <p id="coin-text"></p>
             </div>
             <div className="w-100" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <div className="w-50" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <label htmlFor="customRange2" className="form-label" id="editProj">Edit Projectile:</label>
-                    <input type="range" className="form-range" min="0" max={rangeArr.length} id="Range" onChange={() => {
+                    <label htmlFor="customRange2" className="form-label" id="editCoin">Edit Projectile:</label>
+                    <input type="range" className="form-range" min="0" max={rangeArr.length} id="c-Range" onChange={() => {
                        displayControl()
                     }}></input>
                 </div>
@@ -183,7 +178,7 @@ const Form = () => {
             </div>
             <div className="w-100" style={{display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                 <div className="w-50">
-                    <select className="form-select text-center px-2 w-75" id="rangeSelEdit" aria-label="Default select example" onChange={() => {
+                    <select className="form-select text-center px-2 w-75" id="c-rangeSelEdit" aria-label="Default select example" onChange={() => {
                         document.getElementById('disable-2').disabled = true
                         editBtn.disabled = false
                     }}>
@@ -195,10 +190,10 @@ const Form = () => {
                     </select>
                 </div>
                 <div className="w-25">
-                    <button className="btn btn-outline-secondary w-100 control" id="edit-btn" type="button"  aria-expanded="false" onClick={()=>{remove()}} >Remove</button>
+                    <button className="btn btn-outline-secondary w-100 control" id="c-edit-btn" type="button"  aria-expanded="false" onClick={()=>{remove()}} >Remove</button>
                 </div>
             </div>
-            <button style={{borderRadius: '0.25rem', height: '10%', width: "7%", top: '40%', color:'black'}} className="carousel-control-next" id="nextBtn" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" onClick={()=>{next()}}>
+            <button style={{borderRadius: '0.25rem', height: '10%', width: "7%", top: '40%', color:'black'}} className="carousel-control-next" id="c-nextBtn" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" onClick={()=>{next()}}>
                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
                 <span className="visually-hidden">Next</span>
             </button>
@@ -206,4 +201,4 @@ const Form = () => {
     )
 }
 
-export default Form
+export default CoinForm

@@ -67,6 +67,13 @@ h1{
 
 /* Background setup */
 
+.carousel-control-next,
+.carousel-control-prev {
+  filter: invert(100%);
+}
+
+
+
 .background {
   position: absolute;
   display: flex;
