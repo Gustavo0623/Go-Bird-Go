@@ -1,7 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { MapListContext } from "../../App";
+import { PushContext } from "../../App";
 
 const NameForm = () => {
+    const navigate = useNavigate()
+    const newMap = useContext(PushContext)
+    const idContext = useContext(PushContext)[0]
+    const mapContext = useContext(MapListContext).mapList
+    const updateContext = useContext(MapListContext).setMapList
+    const nameContext = useContext(PushContext)[3]
+    console.log(newMap)
+    console.log(mapContext)
+    console.log(idContext)
+    console.log(nameContext)
     let nameText;
+    let newMapObj;
     const [name, setName] = useState('')
     const nameCheck = () => {
         if (name === '') {
@@ -11,15 +25,42 @@ const NameForm = () => {
         }
     }
 
-    const createMap = () => {
-        
-    }
-
-
-    setTimeout(() => {
-        console.log(name)
+    setTimeout(()=>{
         nameCheck()
+        createMap() 
     })
+
+    const createMap = () => {
+        idContext.setMapId(mapContext.length + 1)
+        nameContext.setMapName(name)
+        console.log(newMap)
+    }
+    
+        
+
+    const sendData = () => {
+        if (nameContext.mapName != null) {
+            newMapObj = {
+                id: parseFloat(idContext.mapId),
+                Projectiles_placement: `${newMap[1].newProjValue}`,
+                Coins_placement: `${newMap[2].coinValue}`,
+                Map_Name: `${nameContext.mapName}`
+            } 
+            updateContext(mapContext.concat(newMapObj))
+
+            fetch('http://localhost:5000/maps/new-map', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newMapObj),
+            }) 
+            .then(res => {
+                console.log(res.data)
+            }) 
+            .catch( err => {
+                console.log(err)
+            })
+        } 
+    }
 
 
     return(
@@ -30,7 +71,13 @@ const NameForm = () => {
                     nameText = document.getElementById('map-name')
                     setName(nameText.value)
                 }}/>
-                <button className="btn btn-outline-secondary rounded" type="button" id="button-addon2">Create Map!</button>
+                <button className="btn btn-outline-secondary rounded" type="button" id="button-addon2" onClick={()=>{ 
+                    document.getElementById('button-addon2').disabled = true
+                    sendData()
+                    setTimeout(()=>{navigate('/')})
+                }}>
+                    Create Map!
+                </button>
             </div>
         </div>
     )

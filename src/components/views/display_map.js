@@ -4,9 +4,10 @@ import Header from "../layout/header";
 import Background from "../layout/background";
 import Floor from "../layout/floor";
 import Body from "../layout/body";
-import {ProjContext} from "../../App";
+import {ProjContext, MapListContext} from "../../App";
 
 const DisplayMaps = () => {
+    const mapListContext = useContext(MapListContext)
 
     const projContext = useContext(ProjContext)[0]
     let map;
@@ -17,7 +18,7 @@ const DisplayMaps = () => {
   
     useEffect(() => {
         getGameMap()
-    }, [])
+    },[])
 
     // To fetch data Fron Database
     const getGameMap = () => {
@@ -26,7 +27,7 @@ const DisplayMaps = () => {
         document.getElementById('h-score-sign').style.display= 'none'
         document.getElementById('c-score-sign').style.display= 'none'
 
-        return fetch('http://localhost:5000/maps', {method: 'GET'})
+        fetch('http://localhost:5000/maps', {method: 'GET'})
         .then(response=> {
                 return response.text();
         })
@@ -37,6 +38,16 @@ const DisplayMaps = () => {
             console.log(error)
         })
     } 
+
+    setTimeout(()=>{
+        console.log(mapListContext.mapList)
+        console.log(gameMap)
+
+        if (mapListContext.mapList === null) {
+            console.log(gameMap)
+            mapListContext.setMapList(gameMap)
+        }
+    })
     
     // To set Context of map that is selected to Game page to use to 
     // initialize game based on the map values
