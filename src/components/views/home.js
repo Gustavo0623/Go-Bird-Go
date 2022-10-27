@@ -14,6 +14,8 @@ const Home = () => {
 
     // To clear display of these elements while on this page
     setTimeout(() => {
+        document.getElementById('create').style.display= 'none'
+        document.getElementById('edit').style.display= 'none'
         document.getElementById('h-score-sign').style.display= 'none'
         document.getElementById('c-score-sign').style.display= 'none'
     })

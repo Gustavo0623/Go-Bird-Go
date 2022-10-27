@@ -4,9 +4,10 @@ import Header from "../layout/header";
 import Background from "../layout/background";
 import Floor from "../layout/floor";
 import Body from "../layout/body";
-import {ProjContext, MapListContext} from "../../App";
+import {ProjContext, MapListContext, EditContext} from "../../App";
 
-const DisplayMaps = () => {
+const MapEdit = () => {
+    const editContext = useContext(EditContext)
     const navigate = useNavigate()
     const mapListContext = useContext(MapListContext)
 
@@ -65,6 +66,11 @@ const DisplayMaps = () => {
         .then(res => console.log(res))
     }
 
+    const editMap = () => {
+        let mapName = document.getElementById('select').options[document.getElementById('select').selectedIndex].textContent
+        editContext.setEditName(mapName)
+        console.log(mapName)
+    }
 
 
     return (
@@ -91,10 +97,13 @@ const DisplayMaps = () => {
                     </select>
                     <p id='msg-3'></p>
                     <p id='msg-4'></p>
-                    <button className="btn btn-outline-secondary w-25 control" id="cntrlBtn" type="button"  aria-expanded="false">
+                    <button className="btn btn-outline-secondary w-25 control" id="cntrlBtn" type="button"  aria-expanded="false" onClick={()=>{
+                        editMap()
+                        navigate('/map_edit_form')
+                    }}>
                         Edit
                     </button>
-                    <button className="btn btn-outline-secondary w-25 control" id="cntrlBtn" type="button"  aria-expanded="false" onClick={()=>{
+                    <button className="btn btn-outline-secondary w-25 control" id="cntrlBtn2" type="button"  aria-expanded="false" onClick={()=>{
                         deleteMap()
                         setTimeout(()=>{navigate('/')})
                     }}>
@@ -107,4 +116,4 @@ const DisplayMaps = () => {
     )
 }
 
-export default DisplayMaps
+export default MapEdit

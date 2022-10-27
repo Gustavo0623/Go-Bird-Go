@@ -13,10 +13,10 @@ const Navbar = () => {
             <li className="nav-item rounded">
                 <p className="nav-link rounded fw-bold" style={{color: 'black', backgroundColor: '#FFF6'}} onClick={()=>{navigate('/map_select')}} >Map Select</p>
             </li>
-            <li className="nav-item rounded">
+            <li className="nav-item rounded" id="create">
                 <p className="nav-link rounded fw-bold" style={{color: 'black', backgroundColor: '#FFF6'}} onClick={()=>{navigate('/map_create')}} >Create</p>
             </li>
-            <li className="nav-item rounded">
+            <li className="nav-item rounded" id="edit">
                 <p className="nav-link rounded fw-bold" style={{color: 'black', backgroundColor: '#FFF6'}} onClick={()=>{navigate('/map_edit')}} >Edit/Delete</p>
             </li>
         </ul>
