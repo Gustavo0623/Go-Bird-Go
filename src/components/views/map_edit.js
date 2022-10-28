@@ -40,7 +40,11 @@ const MapEdit = () => {
     } 
 
     setTimeout(()=>{
-
+        if (document.getElementById('select').options[document.getElementById('select').selectedIndex].textContent === 'Choose Map'){
+            document.getElementById('cntrlBtn').disabled = true
+            document.getElementById('cntrlBtn2').disabled = true
+        }
+        
         if (mapListContext.mapList === null) {
             mapListContext.setMapList(gameMap)
         } 
@@ -86,8 +90,10 @@ const MapEdit = () => {
                 <div id="winning-msg" className="w-50" style={{margin: 'auto', left: '25vw'}}>
                     <select style={{backgroundColor: "#FFF8.5"}} className='fs-5 fw-bold w-50 text-center px-2 form-select' id='select' onChange={()=> {
                         changeMap(document.getElementById('select'))
+                        document.getElementById('cntrlBtn').disabled = false
+                        document.getElementById('cntrlBtn2').disabled = false
                         document.getElementById('disable').disabled = true
-                        }}>
+                    }}>
                         <option value={''} id={'disable'} key={0}>Choose Map</option>
                         { gameMap.map((map, i) => {
                             return <option value={i} key={i + 1}>
