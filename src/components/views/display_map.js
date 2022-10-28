@@ -40,11 +40,7 @@ const DisplayMaps = () => {
     } 
 
     setTimeout(()=>{
-        console.log(mapListContext.mapList)
-        console.log(gameMap)
-
         if (mapListContext.mapList === null) {
-            console.log(gameMap)
             mapListContext.setMapList(gameMap)
         }
     })

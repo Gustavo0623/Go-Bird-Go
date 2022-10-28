@@ -5,7 +5,6 @@ import { PushContext } from "../../App";
 
 const Form = () => {
     const newProjContext = useContext(PushContext)[1]
-    console.log(newProjContext)
     const navigate = useNavigate()
     let rangeArr = []
     let range;
@@ -68,21 +67,17 @@ const Form = () => {
 
     const remove = () => {
         if (selEdit.disabled === true) {
-            console.log(rangeArr)
-            console.log(range.value)
             range.min = 1
             if(rangeArr.length > 1){
                 rangeArr.splice(range.value - 1, 1)
                 range.max = rangeArr.length
                 displayControl()
                 projLabel.textContent = `Number of Projectiles: ${rangeArr.length}`
-                console.log('good')
             } else {
                 range.min = 0
                 rangeArr.pop()
                 range.max = rangeArr.length
                 sel.selectedIndex = 0
-                console.log('done')
                 radioDisable()
                 addButton.disabled = true
                 editBtn.disabled = true
@@ -90,18 +85,13 @@ const Form = () => {
                 displayControl()
                 projLabel.textContent = `Number of Projectiles: ${rangeArr.length}`
             }
-            console.log(rangeArr)
             
         } else {
-            console.log(rangeArr)
-            console.log(range.value)
             rangeArr.splice(range.value - 1, 1, selEdit.options[selEdit.selectedIndex].textContent)
-            console.log(rangeArr)
             displayControl()
         }
     }
     const next = () => {
-        console.log(rangeArr)
         let projString = rangeArr.toString()
         projString = projString.toLowerCase()
         newProjContext.setNewProjValue(`${projString}`)

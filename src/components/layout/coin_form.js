@@ -5,10 +5,7 @@ import { PushContext } from "../../App"
 
 const CoinForm = () => {
     const navigate = useNavigate()
-    const test = useContext(PushContext)
     const newCoinContext = useContext(PushContext)[2]
-    console.log(test)
-    console.log(newCoinContext)
     let rangeArr = []
     let range;
     let position;
@@ -70,21 +67,17 @@ const CoinForm = () => {
 
     const remove = () => {
         if (selEdit.disabled === true) {
-            console.log(rangeArr)
-            console.log(range.value)
             range.min = 1
             if(rangeArr.length > 1){
                 rangeArr.splice(range.value - 1, 1)
                 range.max = rangeArr.length
                 displayControl()
                 coinLabel.textContent = `Number of Coins: ${rangeArr.length}`
-                console.log('good')
             } else {
                 range.min = 0
                 rangeArr.pop()
                 range.max = rangeArr.length
                 sel.selectedIndex = 0
-                console.log('done')
                 radioDisable()
                 addButton.disabled = true
                 editBtn.disabled = true
@@ -92,13 +85,9 @@ const CoinForm = () => {
                 displayControl()
                 coinLabel.textContent = `Number of Coins: ${rangeArr.length}`
             }
-            console.log(rangeArr)
             
         } else {
-            console.log(rangeArr)
-            console.log(range.value)
             rangeArr.splice(range.value - 1, 1, selEdit.options[selEdit.selectedIndex].textContent)
-            console.log(rangeArr)
             displayControl()
         }
     }
@@ -107,7 +96,6 @@ const CoinForm = () => {
         coinString = coinString.toLowerCase()
         newCoinContext.setCoinValue(`${coinString}`)
         navigate('/map_create/3')
-        console.log(test)
     }
 
     setTimeout(() => {

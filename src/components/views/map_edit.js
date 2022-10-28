@@ -64,7 +64,6 @@ const MapEdit = () => {
     
     const deleteMap = () => {
         let mapToDel = document.getElementById('select').options[document.getElementById('select').selectedIndex].textContent
-        console.log(mapToDel)
         fetch('http://localhost:5000/maps/' + mapToDel, {method: 'DELETE',})
         .then(res => res.text())
         .then(res => console.log(res))
@@ -73,7 +72,6 @@ const MapEdit = () => {
     const editMap = () => {
         let mapName = document.getElementById('select').options[document.getElementById('select').selectedIndex].textContent
         editContext.setEditName(mapName)
-        console.log(mapName)
     }
 
 

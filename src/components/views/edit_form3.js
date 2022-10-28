@@ -43,7 +43,6 @@ const EditForm3 = () => {
     const createMap = () => {
         idContext.setMapId(mapContext.length + 1)
         nameContext.setMapName(name)
-        console.log(newMap)
     }
     
         

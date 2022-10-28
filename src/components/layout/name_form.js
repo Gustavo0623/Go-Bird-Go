@@ -10,10 +10,6 @@ const NameForm = () => {
     const mapContext = useContext(MapListContext).mapList
     const updateContext = useContext(MapListContext).setMapList
     const nameContext = useContext(PushContext)[3]
-    console.log(newMap)
-    console.log(mapContext)
-    console.log(idContext)
-    console.log(nameContext)
     let nameText;
     let newMapObj;
     const [name, setName] = useState('')
@@ -33,7 +29,6 @@ const NameForm = () => {
     const createMap = () => {
         idContext.setMapId(mapContext.length + 1)
         nameContext.setMapName(name)
-        console.log(newMap)
     }
     
         

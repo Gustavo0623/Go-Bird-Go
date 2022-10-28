@@ -261,7 +261,6 @@ const Game = () => {
                         score++
                         logScore()
                         collected = true
-                        console.log(score)
                     }
                 }
             }
