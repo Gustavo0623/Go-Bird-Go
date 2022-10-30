@@ -1,11 +1,11 @@
 # GO BIRD GO
 -----------------
-Go Bird Go is a browser game inspired by the game flappy bird. It utilizes different mechanics to it to give it a unique feel. The objective of the game is to gather all the coins (of a given course/map) while simultaneously avoiding being hit by projectiles that are being launched.
+* Go Bird Go is a browser game inspired by the game flappy bird. It utilizes different mechanics to it to give it a unique feel. The objective of the game is to gather all the coins (of a given course/map) while simultaneously avoiding being hit by projectiles that are being launched.
 Course completed successfully if player completes course with maximum coins collected while avoiding enough obstacles to maintain enough **lives**. Attempt is considered failed if the player fails to collect all the coins, or if the player runs out of lives by being hit by projectiles.
 ---------------------------------------------------------------------------
 ## The frontend was created with ReactJs.
 
-As of 10/30/2022 it is only playable with a keyboard and uses the "spacebar" but there is plans to make it playable in mobile by just tapping the screen. There is a built in feature that allows the user to create a course/map as well as edit/delete the maps of ones choosing. More customization to come along with more difficulty levels in the near future.
+* As of 10/30/2022 it is only playable with a keyboard and uses the "spacebar" but there is plans to make it playable in mobile by just tapping the screen. There is a built in feature that allows the user to create a course/map as well as edit/delete the maps of ones choosing. More customization to come along with more difficulty levels in the near future.
 ----------------------------------------------------------------------------
 ## The Backend was created using express, Node.js, and PostrgeSQL.
 
