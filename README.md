@@ -9,7 +9,7 @@ Course completed successfully if player completes course with maximum coins coll
 ----------------------------------------------------------------------------
 ## The Backend was created using express, Node.js, and PostrgeSQL.
 
-### Link to backend repository: https://github.com/Gustavo0623/go-bird-go-backend
+* Link to backend repository: https://github.com/Gustavo0623/go-bird-go-backend
 ----------------------------------------------------------------------------
 ## Key features:
 * Spacebar to make bird (player) fly (move upwards on screen).
