@@ -30,3 +30,13 @@ As of 10/30/2022 it is only playable with a keyboard and uses the "spacebar" but
 * Score system to allow players who clear without collecting all coins to still pass but with a lower score.
 * Multi obstacle/projectiles launched at the same time. 
 * Variety of obstacles to choose from. 
+----------------------------------------------------------------------------
+**Tools and Languages Used**
+
+* HTML
+* CSS/ Bootsrap
+* Javascript
+* React.Js
+* Node.Js
+* Express
+* PostgreSQL
